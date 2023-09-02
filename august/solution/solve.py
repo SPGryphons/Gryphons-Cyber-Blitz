@@ -10,7 +10,7 @@ URL = "http://chal.gryphons.sg:1337"
 
 # https://webhook.site
 # e.g "https://webhook.site/487a95aa-1434-435c-959e-23e739a70375"
-WEBHOOK_URL = "https://webhook.site/487a95aa-1434-435c-959e-23e739a70375"
+WEBHOOK_URL = "<replace_this_with_your_web_hook>"
 WEBHOOK_TOKEN_ID = WEBHOOK_URL.split("/")[-1]
 WEBHOOK_HEADERS = {"api-key": WEBHOOK_TOKEN_ID}
 
