@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/static/img/logo.png" alt="Logo" width="30" height="30">
+          </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAlt" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/profile">Profile</a>
+            </li>
+            {% if admin %}
+            <li class="nav-item">
+              <a class="nav-link" href="/flag">Get Flag</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/create">Create</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron jumbotron-fluid text-center">
+      <div class="container">
+        <h1 class="display-4">Your posts</h1>
+        <p class="lead">Welcome, {{ username }}</p>
+      </div>
+    </div>
+  </header>
+  <main class="container" id="main-content">
+    {% if posts %}
+      {% for post in posts %}
+      <a href="/view/{{ post[2] }}" class="text-white">
+        <div class="row-cols-1">
+          <div class="card text-white bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">{{ post[0] }}</h5>
+              {% if post[4] %}
+              <p class="card-text">&#9989; Post is approved!</p>
+              {% else %}
+              <p class="card-text">&#10060; Post is not approved yet.</p>
+              {% endif %}
+              <a href="/api/delete/{{ post[2] }}">
+                <button class="btn btn-danger float-right">&#128465; Delete</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    {% else %}
+      <div class="row-cols-1">
+        <div class="card text-white bg-dark">
+          <div class="card-body">
+            <h5 class="card-title">No posts found</h5>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if admin %}
+    <div class="text-center py-2">
+      <a href="/flag" class="btn btn-primary">Get Flag</a>
+    </div>
+    {% else %}
+    <div class="text-center py-2">
+      <a href="/create" class="btn btn-primary">Create Post</a>
+    </div>
+    {% endif %}
+    
+  </main>
+  <footer class="bg-light text-center">
+    <p>&copy; 2023 Secret Monkey Organization. All rights reserved.</p>
+  </footer>
+</body>
+</html>

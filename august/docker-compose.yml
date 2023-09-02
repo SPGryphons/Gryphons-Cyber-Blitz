@@ -1,0 +1,26 @@
+services:
+  web:
+    build: ./site
+    ports:
+      - "1337:1337"
+    env_file:
+      - .env
+    environment:
+      - FLAG=${FLAG}
+      - BOT_TOKEN=${BOT_TOKEN}
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
+    restart: always
+
+  adminbot:
+    build: ./adminbot
+    depends_on:
+      - web
+    links:
+      - web
+    env_file:
+      - .env
+    environment:
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      - BOT_TOKEN=${BOT_TOKEN}
+    command: ["web", "1337"]
+    restart: always
